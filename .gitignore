@@ -1,0 +1,67 @@
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Python / Django ----
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+venv/
+env/
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+
+# Environment / secrets
+.env
+.env.local
+*.env
+
+# Django specific
+media/
+staticfiles/
+static/
+local_settings.py
+
+# ---- Node / React ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.env.development
+.env.production
+coverage/
+build/
+dist/
+
+# ---- IDEs ----
+.vscode/
+.idea/
+*.swp
+*.swo
