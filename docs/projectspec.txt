@@ -1,0 +1,35 @@
+Public site for fans, players, students and alumni
+
+Goals (user-side):
+Fixtures
+Results
+Photo Gallery
+Match Reports
+Squad Lists
+Stats tables
+Leagues standing
+Payment for alumni system?
+Branding
+Looks good
+Hall of fame
+
+Content and Data
+players
+teams (1st,2nd,4th,Womens and NB)
+matches 
+Stats
+standings
+photos
+events/socials etc 
+Standings and Fixtures can be found on the FA website, however player statistics and such will come internally
+
+Roles and Permissions
+Public
+logged in member (player?)
+Admin (commitee/captain)
+Me (superadmin/owner)
+Ideally, the backend will be user friendly so that non-technical Admin members are able to use it to upload photos, add stats etc. I would like this to be integrated with raven (i believe this is the cambridge uni system) as this makes it easy to authenticate members and give them admin (using their cam email)
+
+Technology Stack: 
+tbc 
+
