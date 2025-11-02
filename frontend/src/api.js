@@ -17,3 +17,9 @@ export async function createTeam(payLoad){
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     return res.json();
 }
+
+export async function fetchPlayers() {
+    const res = await fetch(`${BASE}/api/players/`);
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    return res.json();
+}

@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import TeamsList from './teamList';
+import PlayersList from './playersList';
 import TeamsCreateForm from './TeamsCreateForm';
 import React, { useState } from 'react';
 
@@ -17,9 +18,14 @@ function App() {
       <h1>HCAFC Teams</h1>
       <TeamsCreateForm onCreated={handleCreated} />
       <TeamsList refreshKey={refreshKey} />
+      <hr style={{ margin: "2rem 0" }} />
+      <h2>Players</h2>
+      <PlayersList />
     </main>
   );
 }
+
+
 
 export default App;
 
