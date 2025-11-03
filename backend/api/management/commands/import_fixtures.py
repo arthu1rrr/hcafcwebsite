@@ -64,16 +64,10 @@ class Command(BaseCommand):
                 home_match = venue == "Home"
                 completed = True
                 if score_str and '-' in score_str:
-
-                    home_score, away_score = map( str,score_str.split('-'))
-                    if home_score.isdigit():
-                        home_score = int(home_score)
-                    else:
-                        home_score = None   
-                    if away_score.isdigit():
-                        away_score = int(away_score)
-                    else:
-                        away_score = None
+                    try:
+                        home_score, away_score = map(int, score_str.split('-'))
+                    except ValueError:
+                        home_score, away_score = None, None
                 else:
                     home_score, away_score = None, None
                 opponent = away_team if home_match else home_team
@@ -120,12 +114,10 @@ class Command(BaseCommand):
         return fixtures
 
     def sync_matches(self, team, fixtures):
-        """
-        Upsert Match objects based on fetched fixtures.
-        """
         count_created, count_updated = 0, 0
+
         for f in fixtures:
-            obj, created = Match.objects.update_or_create(
+            obj, created = Match.objects.get_or_create(
                 match_team=team,
                 date=f["date"],
                 team_against=f["opponent"],
@@ -139,13 +131,40 @@ class Command(BaseCommand):
                     updated_at=timezone.now(),
                 ),
             )
-            if created:
-                count_created += 1
+
+            if not created:
+                changed = False
+
+                # Always safe to update competition, venue, etc.
+                if (
+                    obj.competition != f["competition"]
+                    or obj.venue != f["venue"]
+                    or obj.home_match != f["home_match"]
+                    or obj.match_completed != f["completed"]
+                ):
+                    obj.competition = f["competition"]
+                    obj.venue = f["venue"]
+                    obj.home_match = f["home_match"]
+                    obj.match_completed = f["completed"]
+                    changed = True
+                
+                # Only update scores if existing ones are None
+                if obj.home_team_score is None and f["home_score"] is not None:
+                    obj.home_team_score = f["home_score"]
+                    changed = True
+                    
+                if obj.away_team_score is None and f["away_score"] is not None:
+                    obj.away_team_score = f["away_score"]
+                    changed = True
+
+                if changed:
+                    obj.updated_at = timezone.now()
+                    obj.save()
+                    count_updated += 1
+
             else:
-                count_updated += 1
+                count_created += 1
 
         self.stdout.write(
-            self.style.SUCCESS(
-                f"{team.name}: {count_created} new, {count_updated} updated."
-            )
+            self.style.SUCCESS(f"{team.name}: {count_created} new, {count_updated} updated.")
         )

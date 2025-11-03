@@ -1,11 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import TeamsList from './teamList';
-import PlayersList from './playersList';
-import MatchesList from './matchesList';
-import TeamsCreateForm from './TeamsCreateForm';
 import React, { useState } from 'react';
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Matches from "./pages/Matches";
+import Teams from "./pages/Teams";
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -15,20 +14,42 @@ function App() {
   }
 
   return (
-    <main style={{ maxWidth: 720, margin: '2rem auto', padding: '1rem' }}>
-      <h1>HCAFC Teams</h1>
-      <TeamsCreateForm onCreated={handleCreated} />
-      <TeamsList refreshKey={refreshKey} />
-      <hr style={{ margin: "2rem 0" }} />
-      <h2>Players</h2>
-      <PlayersList />
-      <hr style={{ margin: "2rem 0" }} />
-      <h2>Matches</h2>
-      <MatchesList />
+    <Router>
+      <header style={headerStyle}>
+        <Link to="/" style={logoStyle}>HCAFC</Link>
+        <nav style={navStyle}>
+          <Link to="/matches">Fixtures & Results</Link>
+          <Link to="/teams">Teams</Link>
+        </nav>
+      </header>
 
-    </main>
+      <main style={{ padding: "1rem", maxWidth: 800, margin: "0 auto" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/matches" element={<Matches />} />
+          <Route path="/teams" element={<Teams />} />
+        </Routes>
+      </main>
+
+      <footer style={footerStyle}>
+        <small>© {new Date().getFullYear()} Homerton College AFC</small>
+      </footer>
+    </Router>
   );
 }
+
+const headerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "1rem",
+  borderBottom: "1px solid #ddd",
+};
+
+const navStyle = { display: "flex", gap: "1rem" };
+const logoStyle = { fontWeight: 700, textDecoration: "none", color: "#000" };
+const footerStyle = { textAlign: "center", marginTop: "2rem", padding: "1rem", borderTop: "1px solid #ddd" };
+
 
 
 
