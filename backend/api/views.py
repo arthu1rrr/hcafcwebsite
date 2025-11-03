@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from rest_framework import status
-from .models import Team,Player
-from .seralizers import TeamSerializer,PlayerSerializer
+from .models import Team,Player,Match
+from .seralizers import TeamSerializer,PlayerSerializer,MatchSerializer
 
 # Create your views here.
 
@@ -87,4 +87,56 @@ def players_detail(request, pk: int):
 
     if request.method == "DELETE":
         player.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(["GET", "POST"])
+def matches_list_create(request):
+    if request.method == "GET":
+        qs = Match.objects.select_related("match_team").all().order_by("-date")
+        team_id = request.query_params.get("team")
+        if team_id:
+            qs = qs.filter(match_team_id=team_id)
+
+        completed = request.query_params.get("completed")
+        if completed is not None:
+            # treat ?completed=true / false (case-insensitive)
+            completed_bool = completed.lower() in ("1", "true", "yes")
+            qs = qs.filter(match_completed=completed_bool)
+
+        # date range filters ?from=YYYY-MM-DD&to=YYYY-MM-DD
+        from_date = request.query_params.get("from")
+        to_date = request.query_params.get("to")
+        if from_date:
+            qs = qs.filter(date__gte=from_date)
+        if to_date:
+            qs = qs.filter(date__lte=to_date)
+
+        serializer = MatchSerializer(qs, many=True)
+        return Response(serializer.data)
+
+    # POST
+    serializer = MatchSerializer(data=request.data)
+    if serializer.is_valid():
+        obj = serializer.save()
+        return Response(MatchSerializer(obj).data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
+def matches_detail(request, pk: int):
+    obj = get_object_or_404(Match, pk=pk)
+
+    if request.method == "GET":
+        return Response(MatchSerializer(obj).data)
+
+    if request.method in ["PUT", "PATCH"]:
+        partial = (request.method == "PATCH")
+        serializer = MatchSerializer(obj, data=request.data, partial=partial)
+        if serializer.is_valid():
+            obj = serializer.save()
+            return Response(MatchSerializer(obj).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == "DELETE":
+        obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

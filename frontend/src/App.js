@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import TeamsList from './teamList';
 import PlayersList from './playersList';
+import MatchesList from './matchesList';
 import TeamsCreateForm from './TeamsCreateForm';
 import React, { useState } from 'react';
 
@@ -21,6 +22,10 @@ function App() {
       <hr style={{ margin: "2rem 0" }} />
       <h2>Players</h2>
       <PlayersList />
+      <hr style={{ margin: "2rem 0" }} />
+      <h2>Matches</h2>
+      <MatchesList />
+
     </main>
   );
 }
