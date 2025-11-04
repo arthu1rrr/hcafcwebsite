@@ -12,6 +12,7 @@ Payment for alumni system?
 Branding
 Looks good
 Hall of fame
+Donations page
 
 Content and Data
 players

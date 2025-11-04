@@ -15,15 +15,10 @@ function App() {
 
   return (
     <Router>
-      <header style={headerStyle}>
-        <Link to="/" style={logoStyle}>HCAFC</Link>
-        <nav style={navStyle}>
-          <Link to="/matches">Fixtures & Results</Link>
-          <Link to="/teams">Teams</Link>
-        </nav>
-      </header>
+      
 
-      <main style={{ padding: "1rem", maxWidth: 800, margin: "0 auto" }}>
+      
+        <main >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/matches" element={<Matches />} />
@@ -31,9 +26,7 @@ function App() {
         </Routes>
       </main>
 
-      <footer style={footerStyle}>
-        <small>© {new Date().getFullYear()} Homerton College AFC</small>
-      </footer>
+      
     </Router>
   );
 }
