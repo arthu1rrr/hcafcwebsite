@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        hcafc: { navy: "#2a52be", cream: "#fffdd0" },
+        hcafc: { navy: "#2a52be", cream: "#fffdd0", offwhite: "#f0f0f0" },
       },
     },
   },

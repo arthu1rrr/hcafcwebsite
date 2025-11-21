@@ -1,53 +1,20 @@
 import heroImg from "../assets/heroimghome.JPG";
-import crestImg from "../assets/crest.png";
-import logoRect from "../assets/crest.png";
 import leaguesImg from "../assets/andreashome.jpeg";
 import womensImg from "../assets/katahomepage.JPG";
-
-const navigationItems = [
-  { label: "Teams", href: "#teams" },
-  { label: "Squad", href: "#squad" },
-  { label: "Fixtures", href: "#fixtures" },
-  { label: "Results", href: "#results" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
-  { label: "Hall of Fame", href: "#hall-of-fame" },
-  { label: "Alumni", href: "#alumni" },
-  { label: "Get involved", href: "#get-involved" },
-  { label: "Committee", href: "#committee" },
-];
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const sections = [
-  { image: leaguesImg, title: "Leagues", alt: "Leagues" },
+  { image: leaguesImg, title: "Mens", alt: "Leagues" },
   { image: null, title: null, alt: null }, // text card handled below
-  { image: womensImg, title: "Women's\n& NB", alt: "Women's and NB" },
+  { image: womensImg, title: "Womens\n& NB", alt: "Women's and NB" },
 ];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-hcafc-cream">
+    <div className="min-h-screen bg-hcafc-offwhite">
       {/* Header */}
-      <header className="bg-hcafc-navy text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          
-          <nav className="hidden gap-4 md:flex" aria-label="Main navigation">
-            {navigationItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="rounded px-2 py-1 text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-white/70"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <img
-            src={crestImg}
-            alt="Homerton College AFC Crest"
-            className="h-12 w-auto"
-          />
-        </div>
-      </header>
+      <Header />
 
       {/* Hero */}
       <section
@@ -92,7 +59,7 @@ export default function Home() {
       <img
         src={sections[0].image}
         alt={sections[0].alt}
-        className="block h-56 w-full object-cover"
+        className="block h-96 w-full object-cover"
       />
       <a
         href="#leagues"
@@ -104,7 +71,7 @@ export default function Home() {
     </div>
 
     {/* Card 2 (text-only) */}
-    <div className="p-5">
+    <div className="flex items-center justify-center p-5">
       <p className="text-center text-base font-semibold text-black/90">
         We are one of the largest college football clubs in Cambridge —
         one of the only clubs to have three men’s teams and our own women’s
@@ -119,37 +86,22 @@ export default function Home() {
       <img
         src={sections[2].image}
         alt={sections[2].alt}
-        className="block h-56 w-full object-cover"
+        className="block h-96 w-full object-cover"
       />
       <a
         href="#womens-nb"
         className="absolute inset-0 flex items-center justify-center bg-black/40 text-2xl font-bold text-white whitespace-pre-line hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/70"
-        aria-label={`${sections[2].title} – open women’s & non-binary team page`}
+        aria-label={`${sections[2].title} – open womens & non-binary team page`}
       >
-        <span className="px-4 py-2">{sections[2].title}</span>
+        <span className="px-4 py-2 text-center">{sections[2].title}</span>
       </a>
     </div>
   </section>
 </div>
+<Footer />
 
 
-      <div className="bg-[#808080]  flex flex-col items-center  justify-between gap-3 px-4 py-4 text-xs text-[#333333] md:flex-row">
-          <a
-            href="#admin"
-            className="underline hover: text-[#333333] focus:outline-none focus:ring-2 focus:ring-gray-400"
-          >
-            admin
-          </a>
-          <p>© {new Date().getFullYear()} Homerton College AFC — produced by Arthur Larkin</p>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover: text-[#333333] focus:outline-none focus:ring-2 focus:ring-gray-400"
-          >
-            instagram
-          </a>
-        </div>
+
       
     </div>
   );
